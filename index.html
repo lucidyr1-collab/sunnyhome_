@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선리 제조 - 우수한 제조 솔루션</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #06b6d4;
+            --dark-bg: #0f172a;
+            --light-text: #f1f5f9;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: var(--light-text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism 기본 스타일 */
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+        }
+
+        /* 헤더 및 네비게이션 */
+        header {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--light-text), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.4);
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--light-text), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 회사 소개 */
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .about-text p {
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        /* 회사연혁 */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--secondary-color);
+            opacity: 0.3;
+        }
+
+        .timeline-items {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            grid-column: 1;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-date {
+            grid-column: 2;
+            text-align: left;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 2;
+        }
+
+        .timeline-item:nth-child(even) .timeline-date {
+            grid-column: 1;
+            text-align: right;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            border: 3px solid var(--dark-bg);
+            top: 1.5rem;
+            z-index: 2;
+        }
+
+        .timeline-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .timeline-content h4 {
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* 사업분야 */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--secondary-color);
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .service-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* 연락처 */
+        .contact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .contact-info {
+            padding: 2rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .contact-item {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            min-width: 40px;
+        }
+
+        .contact-details h4 {
+            margin-bottom: 0.3rem;
+            color: var(--light-text);
+        }
+
+        .contact-details p {
+            opacity: 0.8;
+        }
+
+        .contact-form {
+            padding: 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light-text);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: var(--light-text);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--secondary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* 푸터 */
+        footer {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--light-text);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: var(--secondary-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            opacity: 0.6;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about,
+            .contact {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content,
+            .timeline-item:nth-child(odd) .timeline-date,
+            .timeline-item:nth-child(even) .timeline-date {
+                grid-column: 1;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-date,
+            .timeline-item:nth-child(even) .timeline-date {
+                text-align: left;
+                margin-left: 80px;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .timeline-content {
+                margin-left: 80px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 및 네비게이션 -->
+    <header>
+        <nav>
+            <div class="logo">🏭 선리</div>
+            <ul>
+                <li><a href="#about">회사소개</a></li>
+                <li><a href="#history">연혁</a></li>
+                <li><a href="#services">사업분야</a></li>
+                <li><a href="#contact">연락처</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>미래를 제조하다</h1>
+            <p>최고의 기술력과 품질로 글로벌 시장을 선도하는 선리</p>
+            <button class="cta-button">지금 연락하기</button>
+        </div>
+    </section>
+
+    <!-- 회사 소개 -->
+    <section id="about">
+        <h2>회사소개</h2>
+        <div class="about">
+            <div class="about-text">
+                <h3>선리 제조에 대해</h3>
+                <p>선리는 2010년 설립 이후 제조업 분야에서 혁신적인 솔루션을 제공해온 글로벌 기업입니다.</p>
+                <p>최첨단 기술과 숙련된 전문가팀을 바탕으로 고객의 다양한 요구사항을 충족하는 맞춤형 제조 솔루션을 개발합니다.</p>
+                <p>우리는 품질, 신뢰성, 그리고 지속 가능성을 핵심 가치로 삼아 세계 시장에서의 위치를 지속적으로 강화하고 있습니다.</p>
+            </div>
+            <div class="about-image">
+                🏢
+            </div>
+        </div>
+    </section>
+
+    <!-- 회사연혁 -->
+    <section id="history">
+        <h2>회사연혁</h2>
+        <div class="timeline">
+            <div class="timeline-items">
+                <div class="timeline-item">
+                    <div class="timeline-date">2010년</div>
+                    <div class="timeline-content">
+                        <h4>선리 설립</h4>
+                        <p>정밀 제조 기술 전문 회사로 창립하여 사업을 시작</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2013년</div>
+                    <div class="timeline-content">
+                        <h4>ISO 인증 획득</h4>
+                        <p>ISO 9001, ISO 14001 국제 표준 인증으로 품질 경영 확보</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2016년</div>
+                    <div class="timeline-content">
+                        <h4>생산 능력 2배 확대</h4>
+                        <p>신규 생산 시설 준공으로 글로벌 수요 대응 능력 강화</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2019년</div>
+                    <div class="timeline-content">
+                        <h4>스마트 팩토리 도입</h4>
+                        <p>AI 및 IoT 기반 스마트 제조 시스템 구축으로 생산성 증대</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2022년</div>
+                    <div class="timeline-content">
+                        <h4>해외 지사 확대</h4>
+                        <p>아시아, 유럽, 미국 등 글로벌 거점 확보</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2025년</div>
+                    <div class="timeline-content">
+                        <h4>탄소중립 목표 선언</h4>
+                        <p>2030년까지 탄소 중립 달성을 위한 녹색 제조 추진</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 사업분야 -->
+    <section id="services">
+        <h2>사업분야</h2>
+        <div class="services">
+            <div class="service-card">
+                <span class="service-icon">⚙️</span>
+                <h3>기계 부품 제조</h3>
+                <p>정밀한 기계 부품부터 대형 산업 부품까지 다양한 규격의 맞춤형 제조 서비스</p>
+            </div>
+
+            <div class="service-card">
+                <span class="service-icon">🔧</span>
+                <h3>자동화 시스템</h3>
+                <p>자동화 설비 설계, 제작, 설치로 고객의 생산성 극대화를 지원</p>
+            </div>
+
+            <div class="service-card">
+                <span class="service-icon">🏭</span>
+                <h3>전자제품 생산</h3>
+                <p>반도체, 디스플레이, 배터리 등 첨단 전자제품 제조</p>
+            </div>
+
+            <div class="service-card">
+                <span class="service-icon">🌱</span>
+                <h3>친환경 제조</h3>
+                <p>환경을 배려한 친환경 제조 공정으로 지속 가능한 미래 구현</p>
+            </div>
+
+            <div class="service-card">
+                <span class="service-icon">🔬</span>
+                <h3>연구개발</h3>
+                <p>첨단 기술 개발 및 제품 혁신으로 산업 선도</p>
+            </div>
+
+            <div class="service-card">
+                <span class="service-icon">📦</span>
+                <h3>품질관리</h3>
+                <p>철저한 검수 및 품질 관리로 최상의 제품 보증</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 연락처 -->
+    <section id="contact">
+        <h2>연락처</h2>
+        <div class="contact">
+            <div class="contact-info">
+                <h3>연락 정보</h3>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-details">
+                        <h4>회사주소</h4>
+                        <p>서울특별시 강남구 테헤란로 123, 선리빌딩</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-details">
+                        <h4>전화번호</h4>
+                        <p>02-1234-5678</p>
+                        <p>대표: 02-1234-5600</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <h4>이메일</h4>
+                        <p>contact@sunli.com</p>
+                        <p>sales@sunli.com</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🕐</div>
+                    <div class="contact-details">
+                        <h4>영업시간</h4>
+                        <p>평일: 09:00 - 18:00</p>
+                        <p>토요일: 10:00 - 16:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form">
+                <h3 style="margin-bottom: 1.5rem; color: var(--secondary-color);">문의하기</h3>
+
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">전화번호</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">제목</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">메시지</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="cta-button" style="width: 100%;">문의 보내기</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>회사</h4>
+                <ul>
+                    <li><a href="#about">회사소개</a></li>
+                    <li><a href="#history">회사연혁</a></li>
+                    <li><a href="#services">사업분야</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>지원</h4>
+                <ul>
+                    <li><a href="#contact">문의하기</a></li>
+                    <li><a href="#">자주 묻는 질문</a></li>
+                    <li><a href="#">기술지원</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>소셜</h4>
+                <ul>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 선리 제조. 모든 권리가 보호됩니다.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 부드러운 스크롤 네비게이션
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 폼 제출 처리
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('문의가 접수되었습니다. 빠른 시간 내에 연락드리겠습니다!');
+            this.reset();
+        });
+
+        // 스크롤 애니메이션
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.service-card, .timeline-content').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
